@@ -134,7 +134,8 @@ impl Rzup {
     ///
     /// # Arguments
     /// * `force` - If true, reinstalls even if already installed
-    #[cfg_attr(not(feature = "cli"), expect(dead_code))]
+    #[cfg(not(feature = "cli"))]
+    #[allow(dead_code)]
     pub(crate) fn install_all(&mut self, force: bool) -> Result<()> {
         self.registry
             .install_all_components(&self.environment, force)?;
@@ -147,7 +148,8 @@ impl Rzup {
     /// * `component` - Component
     /// * `version` - Specific version to install, or None for latest
     /// * `force` - If true, reinstalls even if already installed
-    #[cfg_attr(not(feature = "cli"), expect(dead_code))]
+    #[cfg(not(feature = "cli"))]
+    #[allow(dead_code)]
     pub(crate) fn install_component(
         &mut self,
         component: &Component,
@@ -164,7 +166,8 @@ impl Rzup {
     /// # Arguments
     /// * `component` - Component
     /// * `version` - Version to uninstall
-    #[cfg_attr(not(feature = "cli"), expect(dead_code))]
+    #[cfg(not(feature = "cli"))]
+    #[allow(dead_code)]
     pub(crate) fn uninstall_component(
         &mut self,
         component: &Component,
@@ -182,7 +185,8 @@ impl Rzup {
     ///
     /// # Returns
     /// A newest-to-oldest list of installed component versions
-    #[cfg_attr(not(feature = "cli"), expect(dead_code))]
+    #[cfg(not(feature = "cli"))]
+    #[allow(dead_code)]
     pub(crate) fn list_versions(&self, component: &Component) -> Result<Vec<Version>> {
         Ok(
             Registry::list_component_versions(&self.environment, component)?
@@ -208,7 +212,8 @@ impl Rzup {
         self.environment.emit(event)
     }
 
-    #[cfg_attr(not(feature = "cli"), expect(dead_code))]
+    #[cfg(not(feature = "cli"))]
+    #[allow(dead_code)]
     pub(crate) fn print(&self, message: String) {
         self.emit(RzupEvent::Print { message });
     }
@@ -217,7 +222,8 @@ impl Rzup {
     ///
     /// # Arguments
     /// * `component` - Component
-    #[cfg_attr(not(feature = "cli"), expect(dead_code))]
+    #[cfg(not(feature = "cli"))]
+    #[allow(dead_code)]
     pub(crate) fn get_latest_version(&self, component: &Component) -> Result<Version> {
         components::get_latest_version(component, &self.environment, self.registry.base_urls())
     }
@@ -241,14 +247,16 @@ impl Rzup {
     /// # Arguments
     /// * `component` - Component
     /// * `version` - Version to check
-    #[cfg_attr(not(feature = "cli"), expect(dead_code))]
+    #[cfg(not(feature = "cli"))]
+    #[allow(dead_code)]
     pub(crate) fn version_exists(&self, component: &Component, version: &Version) -> Result<bool> {
         let component_installed = component.parent_component().unwrap_or(*component);
         Ok(Paths::find_version_dir(&self.environment, &component_installed, version)?.is_some())
     }
 
     /// Gets the settings manager.
-    #[cfg_attr(not(feature = "cli"), expect(dead_code))]
+    #[cfg(not(feature = "cli"))]
+    #[allow(dead_code)]
     pub(crate) fn settings(&self) -> &Settings {
         self.registry.settings()
     }
@@ -267,7 +275,8 @@ impl Rzup {
     }
 
     /// Update rzup by downloading and re-running the installation script.
-    #[cfg_attr(not(feature = "cli"), expect(dead_code))]
+    #[cfg(not(feature = "cli"))]
+    #[allow(dead_code)]
     pub(crate) fn self_update(&self) -> Result<()> {
         self.emit(RzupEvent::InstallationStarted {
             id: "rzup".to_string(),
@@ -306,7 +315,8 @@ impl Rzup {
         Ok(())
     }
 
-    #[cfg_attr(not(feature = "cli"), expect(dead_code))]
+    #[cfg(not(feature = "cli"))]
+    #[allow(dead_code)]
     pub(crate) fn build_rust_toolchain(
         &mut self,
         repo_url: &str,
